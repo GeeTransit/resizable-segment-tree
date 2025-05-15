@@ -48,7 +48,7 @@ class ResizableSegmentTree:
         j = (i<<1) | 1
         tree[j] = value
         k = 1
-        while j | (k<<1) < len(tree):  # is the right child inside the tree?
+        while j | ((k<<2)-1) < len(tree):  # is subtree of parent complete?
             p = j & ~k | (k<<1)
             tree[p] = func(tree[j & ~(k<<1)], tree[j | (k<<1)])
             j = p
@@ -152,4 +152,13 @@ if __name__ == "__main__":
     print()
     print("== after updates")
     t._print()
+    test_tree_query(t)
+
+    # test edge case with updating incomplete nodes
+    tt = ResizableSegmentTree(lambda a, b: a + b, [])
+    for x in range(7):
+        tt.append(x)
+    print("== after appends")
+    tt._print()
+    tt[0] = 9
     test_tree_query(t)
