@@ -66,6 +66,12 @@ class ResizableSegmentTree:
         tree += (None, None)
         self[i] = value
 
+    def pop(self):
+        tree = self.tree
+        value = tree.pop()
+        tree.pop()
+        return value
+
     def query(self, i, j):
         func = self.func
         tree = self.tree
@@ -151,6 +157,16 @@ if __name__ == "__main__":
     t[8] = 17
     print()
     print("== after updates")
+    t._print()
+    test_tree_query(t)
+
+    # test pops
+    assert t.pop() == 10
+    assert t.pop() == 17
+    assert t.pop() == 8
+    assert t.pop() == 16
+    print()
+    print("== after pops")
     t._print()
     test_tree_query(t)
 
